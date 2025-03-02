@@ -7,6 +7,11 @@ WITH transaction_data AS (
 )
 SELECT 
     transaction_date,
-    AVG(total_transaction_amount) OVER (ORDER BY transaction_date ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS rolling_3_day_avg
+    AVG(total_transaction_amount) OVER (
+        ORDER BY transaction_date 
+        ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
+    ) AS rolling_3_day_avg
 FROM transaction_data
-WHERE transaction_date = '2021-01-31';
+WHERE transaction_date <= '2021-01-31'
+ORDER BY transaction_date DESC
+LIMIT 1;
